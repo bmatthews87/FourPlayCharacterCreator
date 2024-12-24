@@ -15,13 +15,22 @@ namespace FourPlayCharacterCreator.Controllers
 
         public IActionResult Index()
         {
-            var character = new Character();
-            return View(character);
+            return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(IFormCollection collection)
         {
-            return View();
+            Console.WriteLine("it works");
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

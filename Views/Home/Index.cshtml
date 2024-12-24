@@ -1,64 +1,24 @@
-﻿@model FourPlayCharacterCreator.Models.Character
+﻿@using FourPlayCharacterCreator
 
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>View</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HeadNuggets)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TorsoNuggets)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LimbNuggets)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Proclivity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MagicDomain)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PsionicDomain)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.HeadNuggets)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.TorsoNuggets)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.LimbNuggets)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Proclivity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.MagicDomain)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.PsionicDomain)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    </tbody>
-</table>
+<h4>Step 1) Select a Proclivity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="Home" method="post">
+            <div class="form-group">
+                <select name="Proclivity" asp-items="Html.GetEnumSelectList<Proclivity>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
