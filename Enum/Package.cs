@@ -1,0 +1,30 @@
+﻿namespace FourPlayCharacterCreator
+{
+    public enum Package
+    {
+        //Physical
+        Athlete,
+        Craftsman,
+        Explorer,
+        Laborer,
+        Soldier,
+        //Mental
+        Alchemist,
+        Engineer,
+        Magician,
+        Psychic,
+        Scholar,
+        //Social
+        Eremite,
+        Evangelist,
+        Merchant,
+        Minstrel,
+        Politician,
+        //Anti-Social
+        Assassin,
+        ConArtist,
+        Smuggler,
+        Thief,
+        Wire
+    }
+}
