@@ -1,4 +1,4 @@
-﻿@using FourPlayCharacterCreator
+﻿@model FourPlayCharacterCreator.Models.Character
 
 @{
     ViewData["Title"] = "View";
@@ -11,7 +11,7 @@
     <div class="col-md-4">
         <form asp-action="Index" asp-controller="Home" method="post">
             <div class="form-group">
-                <select name="Proclivity" asp-items="Html.GetEnumSelectList<Proclivity>()">
+                <select asp-for=Proclivity name="Proclivity" asp-items="Html.GetEnumSelectList<Proclivity>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
             </div>

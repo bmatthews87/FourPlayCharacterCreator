@@ -1,4 +1,4 @@
-﻿namespace FourPlayCharacterCreator.Enum
+﻿namespace FourPlayCharacterCreator
 {
     public enum Weapon
     {

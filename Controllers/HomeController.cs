@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json;
 using FourPlayCharacterCreator.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,14 +16,38 @@ namespace FourPlayCharacterCreator.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            //if we haven't already defined a character session, make one here
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Character")))
+            {
+                Character c = new Character();
+                HttpContext.Session.SetString("Character", JsonSerializer.Serialize(c));
+            }
+
+            Character character = GetCharacterSession();
+
+            return View(character);
+        }
+
+        private Character GetCharacterSession()
+        {
+            string characterString = HttpContext.Session.GetString("Character");
+            Character character = JsonSerializer.Deserialize<Character>(characterString);
+            return character;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(IFormCollection collection)
         {
-            HttpContext.Session.SetString("Proclivity", collection["Proclivity"].ToString());
+            //get current character session
+            Character character = GetCharacterSession();
+
+            //set character values
+            character.Proclivity = (Proclivity)Enum.Parse(typeof(Proclivity), collection["Proclivity"].ToString());
+
+            //save character
+            HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+
             try
             {
                 return RedirectToAction(nameof(Result));
@@ -35,8 +60,14 @@ namespace FourPlayCharacterCreator.Controllers
 
         public IActionResult Result()
         {
-            ViewBag.Result = HttpContext.Session.GetString("Proclivity");
-            return View();
+            Character character = GetCharacterSession();
+            return View(character);
+        }
+
+        public IActionResult test()
+        {
+            Character character = GetCharacterSession();
+            return View(character);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
