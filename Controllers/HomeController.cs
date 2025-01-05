@@ -22,15 +22,21 @@ namespace FourPlayCharacterCreator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(IFormCollection collection)
         {
-            Console.WriteLine("it works");
+            HttpContext.Session.SetString("Proclivity", collection["Proclivity"].ToString());
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Result));
             }
             catch
             {
                 return View();
             }
+        }
+
+        public IActionResult Result()
+        {
+            ViewBag.Result = HttpContext.Session.GetString("Proclivity");
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

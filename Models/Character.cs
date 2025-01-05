@@ -10,22 +10,21 @@
             LimbNuggets = 5;
             Proclivity = Proclivity.Physical;
             Competencies = new List<Competency>()
-            {
-                Competency.Alchemy,
-                Competency.Disguise
-            };
+                            {
+                                Competency.Alchemy,
+                                Competency.Disguise
+                            };
             MagicDomain = MagicDomain.Unknown;
             Spells = new List<Spell>()
-            {
-                Spell.Comet,
-                Spell.Applefall
-            };
-
+                            {
+                                Spell.Comet,
+                                Spell.Applefall
+                            };
             PsionicDomain = PsionicDomain.FaithHealing;
             PsionicSpells = new List<PsionicSpell>()
-            {
-                PsionicSpell.AllEyes
-            };
+                            {
+                                PsionicSpell.AllEyes
+                            };
         }
 
         string Name { get; set; }
@@ -53,7 +52,5 @@
             Console.WriteLine(Name);
             Console.WriteLine(HeadNuggets);
         }
-
-
     }
 }

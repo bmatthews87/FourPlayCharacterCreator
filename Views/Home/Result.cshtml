@@ -1,0 +1,18 @@
+﻿@using FourPlayCharacterCreator
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Step 1) Select a Proclivity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @{
+            Proclivity p = (Proclivity)int.Parse(ViewBag.Result);
+            @Html.Encode(p);
+        }
+        
+    </div>
+</div>
