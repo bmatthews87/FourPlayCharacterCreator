@@ -1,26 +1,27 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FourPlayCharacterCreator
 {
     public enum Competency
     {
         Alchemy, //men
-        [Description("Armed Combat")]
+        [Display(Name = "Armed Combat")]
         ArmedCombat, //phy
-        [Description("Bypassing Traps and Alarms")]
+        [Display(Name = "Bypassing Traps and Alarms")]
         BypassingTrapsAndAlarms, //ant
-        [Description("Community Organization")]
+        [Display(Name = "Community Organization")]
         CommunityOrganization, //soc
-        [Description("Competitive Games")]
+        [Display(Name = "Competitive Games")]
         CompetitiveGames,//phy
-        [Description("Confidence Games")]
+        [Display(Name = "Confidence Games")]
         ConfidenceGames, //ant
         Craftsmanship, //phy
         Disguise, //ant
         Engineering, //men
         Entertainment, //soc
         Evangelism, //soc
-        [Description("Evasion/Escape")]
+        [Display(Name = "Evasion/Escape")]
         EvasionEscape, //ant
         Exploring,  //phy
         Hiding, //ant

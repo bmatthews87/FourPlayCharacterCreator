@@ -1,8 +1,11 @@
-﻿namespace FourPlayCharacterCreator
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FourPlayCharacterCreator
 {
     public enum Spell
     {
         //Unknown
+        [Display(Name = "Arcane Seeing")]
         ArcaneSeeing,
         AstralRadiance,
         Comet,

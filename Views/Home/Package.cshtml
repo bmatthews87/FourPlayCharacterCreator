@@ -1,0 +1,49 @@
+﻿@model FourPlayCharacterCreator.Models.Character
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Step 2) Choose a Package</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="Home" method="post">
+            <div class="form-group">
+                <select asp-for=Package name="Package" asp-items="Html.GetEnumSelectList<Package>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <select name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                    <option selected="selected" value="" readonly></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select name="Competency2" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                    <option selected="selected" value="">Please select</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select name="Competency3" asp-items="Html.GetEnumSelectList<Competency>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select name="Competency4" asp-items="Html.GetEnumSelectList<Competency>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Select Package" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

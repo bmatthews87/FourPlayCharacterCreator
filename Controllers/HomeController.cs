@@ -14,6 +14,7 @@ namespace FourPlayCharacterCreator.Controllers
             _logger = logger;
         }
 
+        #region Step 1) Choose Proclivity
         public IActionResult Index()
         {
             //if we haven't already defined a character session, make one here
@@ -26,13 +27,6 @@ namespace FourPlayCharacterCreator.Controllers
             Character character = GetCharacterSession();
 
             return View(character);
-        }
-
-        private Character GetCharacterSession()
-        {
-            string characterString = HttpContext.Session.GetString("Character");
-            Character character = JsonSerializer.Deserialize<Character>(characterString);
-            return character;
         }
 
         [HttpPost]
@@ -50,30 +44,60 @@ namespace FourPlayCharacterCreator.Controllers
 
             try
             {
-                return RedirectToAction(nameof(Result));
+                return RedirectToAction(nameof(Package));
             }
             catch
             {
                 return View();
             }
         }
+        #endregion
 
-        public IActionResult Result()
+        #region Step2) Choose Package or Custom Character
+        public IActionResult Package()
         {
             Character character = GetCharacterSession();
             return View(character);
         }
 
-        public IActionResult test()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Package(IFormCollection collection)
         {
+            //get current character session
             Character character = GetCharacterSession();
-            return View(character);
+
+            //set character values
+            character.Package = (Package)Enum.Parse(typeof(Package), collection["Package"].ToString());
+
+            //save character
+            HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
+        #endregion
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #region Utility
+        private Character GetCharacterSession()
+        {
+            string characterString = HttpContext.Session.GetString("Character");
+            Character character = JsonSerializer.Deserialize<Character>(characterString);
+            return character;
+        }
+        #endregion
     }
 }
