@@ -11,39 +11,61 @@
     <div class="col-md-4">
         <form asp-action="Index" asp-controller="Home" method="post">
             <div class="form-group">
-                <select asp-for=Package name="Package" asp-items="Html.GetEnumSelectList<Package>()">
+                <select id="PackageList" asp-for=Package name="Package" asp-items="Html.GetEnumSelectList<Package>()" onchange="PackageChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
             <br />
+            <h3>Package Competencies</h3>
             <div class="form-group">
-                <select name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                <select id="Competency1" name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
                     <option selected="selected" value="" readonly></option>
                 </select>
             </div>
             <br />
             <div class="form-group">
-                <select name="Competency2" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
-                    <option selected="selected" value="">Please select</option>
+                <select id="Competency2" name="Competency2" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <h3>Other Competencies</h3>
+            <div class="form-group">
+                <select id="Competency3" name="Competency3" asp-items="Html.GetEnumSelectList<Competency>()">
+                    <option selected="selected" value="">Competency 1</option>
                 </select>
             </div>
             <br />
             <div class="form-group">
-                <select name="Competency3" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected" value="">Please select</option>
+                <select id="Competency4" name="Competency4" asp-items="Html.GetEnumSelectList<Competency>()">
+                    <option selected="selected" value="">Competency 2</option>
                 </select>
             </div>
             <br />
             <div class="form-group">
-                <select name="Competency4" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected" value="">Please select</option>
-                </select>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Select Package" class="btn btn-primary" />
+                <input type="submit" value="Done" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    function PackageChange()
+    {
+        let PackageList = document.getElementById("PackageList");
+        let Competency1 = document.getElementById("Competency1");
+        let Competency2 = document.getElementById("Competency2");
+
+        var selectedPackage = PackageList.options[PackageList.selectedIndex].text;
+
+            switch(selectedPackage) {
+      case "Athlete":
+      Competency1.selectedIndex = 5; //Competitive Games
+      Competency2.selectedIndex = 2; //Armed or Unarmed Combat TODO: Add Multiple Selections here....
+        break;
+      default:
+            }
+    }
+</script>
