@@ -2,6 +2,8 @@
 {
     public enum Package
     {
+        //Custom
+        Custom, //Picks all competencies
         //Physical
         Athlete,
         Craftsman,

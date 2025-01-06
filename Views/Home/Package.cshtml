@@ -19,13 +19,13 @@
             <br />
             <h3>Package Competencies</h3>
             <div class="form-group">
-                <select id="Competency1" name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                <select id="Competency1" name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()">
                     <option selected="selected" value="" readonly></option>
                 </select>
             </div>
             <br />
             <div class="form-group">
-                <select id="Competency2" name="Competency2" asp-items="Html.GetEnumSelectList<Competency>()" disabled>
+                <select id="Competency2" name="Competency2" asp-items="Html.GetEnumSelectList<Competency>()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
@@ -59,6 +59,17 @@
         let Competency2 = document.getElementById("Competency2");
 
         var selectedPackage = PackageList.options[PackageList.selectedIndex].text;
+
+        if (selectedPackage != "Custom")
+        {
+            Competency1.disabled = true;
+            Competency2.disabled = true;
+        }
+        else
+        {
+            Competency1.disabled = false;
+            Competency2.disabled = false;
+        }
 
             switch(selectedPackage) {
       case "Athlete":

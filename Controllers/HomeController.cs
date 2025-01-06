@@ -53,7 +53,7 @@ namespace FourPlayCharacterCreator.Controllers
         }
         #endregion
 
-        #region Step2) Choose Package or Custom Character
+        #region Step 2) Choose Package or Custom Character
         public IActionResult Package()
         {
             Character character = GetCharacterSession();

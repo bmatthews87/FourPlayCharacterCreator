@@ -1,4 +1,6 @@
-﻿namespace FourPlayCharacterCreator
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FourPlayCharacterCreator
 {
     public enum Armor
     {
@@ -6,6 +8,7 @@
         Padded,
         Leather,
         //Medium (3d4)
+        [Display(Name = "Chain Mail")]
         ChainMail,
         Scale,
         //Heavy (4d4)

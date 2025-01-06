@@ -46,6 +46,7 @@ namespace FourPlayCharacterCreator
         SuckerPunching = 27, //ant
         TableGames = 28, //men
         Thievery = 29, //ant
+        [Display(Name = "Unarmed Combat")]
         UnarmedCombat = 30, //phy
         Woodcraft = 31 //phy
     }
