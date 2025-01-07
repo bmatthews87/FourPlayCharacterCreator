@@ -18,13 +18,10 @@ namespace FourPlayCharacterCreator.Controllers
         #region Step 1) Choose Proclivity
         public IActionResult Index()
         {
-            //if we haven't already defined a character session, make one here
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Character")))
-            {
-                Character c = new Character();
-                HttpContext.Session.SetString("Character", JsonSerializer.Serialize(c));
-            }
-
+            //Ensure we have a Blank Character
+            Character c = new Character();
+            HttpContext.Session.SetString("Character", JsonSerializer.Serialize(c));
+            
             Character character = GetCharacterSession();
 
             return View(character);
@@ -70,6 +67,10 @@ namespace FourPlayCharacterCreator.Controllers
 
             //set character values
             character.Package = (Package)Enum.Parse(typeof(Package), collection["Package"].ToString());
+            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency1"].ToString()));
+            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency2"].ToString()));
+            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency3"].ToString()));
+            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency4"].ToString()));
 
             //save character
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));

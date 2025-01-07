@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index" asp-controller="Home" method="post">
+        <form asp-action="Package" asp-controller="Home" method="post" onsubmit="EnableDropdowns()">
             <div class="form-group">
                 <select id="PackageList" asp-for=Package name="Package" asp-items="Html.GetEnumSelectList<Package>()" onchange="PackageChange()">
                     <option selected="selected" value=""></option>
@@ -34,18 +34,18 @@
             <h3>Other Competencies</h3>
             <div class="form-group">
                 <select id="Competency3" name="Competency3" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected" value="">Competency 1</option>
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
             <div class="form-group">
                 <select id="Competency4" name="Competency4" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected" value="">Competency 2</option>
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Done" class="btn btn-primary" />
+                <input type="submit" value="Distribute Dice" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -119,5 +119,10 @@
             //add the value to the dropdown
             copyTo.add(newOption);
         }
+    }
+
+    //Enable Dropwon Helper
+    function EnableDropdowns() {
+        let Competency1 = document.getElementById("Competency1").disabled = false;
     }
 </script>

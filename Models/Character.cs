@@ -2,6 +2,13 @@
 {
     public class Character
     {
+        public Character()
+        {
+            this.Competencies = new List<Competency>();
+            this.Spells = new List<Spell>();
+            this.PsionicSpells = new List<PsionicSpell>();
+        }
+
         string Name { get; set; }
 
         //1 Nugget = d8
@@ -18,7 +25,7 @@
         public Proclivity Proclivity { get; set; }
 
         //Typically d6 bonus
-        List<Competency> Competencies { get; set; }
+        public List<Competency> Competencies { get; set; }
 
         public MagicDomain MagicDomain { get; set; }
         public List<Spell> Spells { get; set; }
