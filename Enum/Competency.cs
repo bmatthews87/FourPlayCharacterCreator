@@ -42,8 +42,8 @@ namespace FourPlayCharacterCreator
         SocialDrinking = 25, //soc
         [Display(Name = "Social Engineering")]
         SocialEngineering = 26, //soc
-        [Display(Name = "Table Games")]
         SuckerPunching = 27, //ant
+        [Display(Name = "Table Games")]
         TableGames = 28, //men
         Thievery = 29, //ant
         [Display(Name = "Unarmed Combat")]

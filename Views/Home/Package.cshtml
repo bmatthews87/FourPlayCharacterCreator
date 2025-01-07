@@ -20,7 +20,7 @@
             <h3>Package Competencies</h3>
             <div class="form-group">
                 <select id="Competency1" name="Competency1" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected" value="" readonly></option>
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
@@ -63,20 +63,61 @@
         if (selectedPackage != "Custom")
         {
             Competency1.disabled = true;
-            Competency2.disabled = true;
         }
         else
         {
             Competency1.disabled = false;
-            Competency2.disabled = false;
+            Competency1.selectedIndex = 1;
+
+            //Since it's custom, ensure Comptency 2 List has all available by copying list 1 into list 2
+            removeOptions(Competency2); //clear the list
+            copyDropdown(Competency1, Competency2);
         }
 
             switch(selectedPackage) {
       case "Athlete":
       Competency1.selectedIndex = 5; //Competitive Games
-      Competency2.selectedIndex = 2; //Armed or Unarmed Combat TODO: Add Multiple Selections here....
+      cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
         break;
       default:
             }
+    }
+
+    //Reduce Competency List 2 Dropdown based on the package selected
+    function cascadeDropdown(dropdownElement, filterArray) {
+        var L = dropdownElement.options.length - 1;
+        for (let i = L; i >= 0; i--) {
+
+            var currentValue = Number(dropdownElement.options[i].value); //had to cast to number, they were coming back as string.
+
+            //if the value is not in the filtered list then remove it
+            if(filterArray.includes(currentValue) === false)
+            {
+                dropdownElement.remove(i);
+            }
+        }
+    }
+
+    //Clear a Dropdown List
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for(i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+
+    //Rebuild Competency Dropdown
+    function copyDropdown(copyFrom, copyTo) {
+        for (let i = 0; i < copyFrom.options.length; i++) {
+            let option = copyFrom.options[i]; //fetch from the master list
+
+            //construct a new option here
+            let newOption = document.createElement("option");
+            newOption.value = option.value
+            newOption.innerHTML = option.innerHTML
+
+            //add the value to the dropdown
+            copyTo.add(newOption);
+        }
     }
 </script>

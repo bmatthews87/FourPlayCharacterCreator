@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using FourPlayCharacterCreator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourPlayCharacterCreator.Controllers
 {
