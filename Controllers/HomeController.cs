@@ -67,10 +67,10 @@ namespace FourPlayCharacterCreator.Controllers
 
             //set character values
             character.Package = (Package)Enum.Parse(typeof(Package), collection["Package"].ToString());
-            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency1"].ToString()));
-            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency2"].ToString()));
-            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency3"].ToString()));
-            character.Competencies.Add((Competency)Enum.Parse(typeof(Competency), collection["Competency4"].ToString()));
+            character.Competencies.Add(StringToCompetency(collection["Competency1"].ToString()));
+            character.Competencies.Add(StringToCompetency(collection["Competency2"].ToString()));
+            character.Competencies.Add(StringToCompetency(collection["Competency3"].ToString()));
+            character.Competencies.Add(StringToCompetency(collection["Competency4"].ToString()));
 
             //save character
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
@@ -85,6 +85,11 @@ namespace FourPlayCharacterCreator.Controllers
             }
         }
         #endregion
+
+        public Competency StringToCompetency(string someValue)
+        {
+            return (Competency)Enum.Parse(typeof(Competency), someValue);
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
