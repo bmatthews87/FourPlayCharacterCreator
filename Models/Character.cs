@@ -35,6 +35,7 @@ namespace FourPlayCharacterCreator.Models
         public Proclivity Proclivity { get; set; }
 
         //Typically d6 bonus
+        public SpellcasterType SpellcasterType { get; set; }
         public List<Competency> Competencies { get; set; }
 
         public MagicDomain MagicDomain { get; set; }

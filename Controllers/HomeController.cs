@@ -20,7 +20,7 @@ namespace FourPlayCharacterCreator.Controllers
             //Ensure we have a Blank Character
             Character c = new Character();
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(c));
-            
+
             Character character = GetCharacterSession();
 
             return View(character);
@@ -106,6 +106,52 @@ namespace FourPlayCharacterCreator.Controllers
 
             //save character
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+
+            try
+            {
+                return RedirectToAction(nameof(Spells));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region Step 4) Spells
+        public IActionResult Spells()
+        {
+            Character character = GetCharacterSession();
+            return View(character);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Spells(IFormCollection collection)
+        {
+            //get current character session
+            Character character = GetCharacterSession();
+
+            //get the spellcaster type selected 
+            SpellcasterType spellcasterType = Common.StringToEnum<SpellcasterType>(collection["SpellcasterType"]);
+
+            //set character values based on spell type
+            if (spellcasterType == SpellcasterType.Magic)
+            {
+                character.MagicDomain = Common.StringToEnum<MagicDomain>(collection["MagicDomain"]);
+                character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell1"]));
+                character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell2"]));
+
+                HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+            }
+            else if (spellcasterType == SpellcasterType.Psionics)
+            {
+                character.PsionicDomain = Common.StringToEnum<PsionicDomain>(collection["PsionicDomain"]);
+                character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell1"]));
+                character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell2"]));
+
+                HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+            }
 
             try
             {

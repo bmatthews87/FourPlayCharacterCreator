@@ -1,0 +1,223 @@
+﻿@model FourPlayCharacterCreator.Models.Character
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Step 2) Choose a Package</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Spells" asp-controller="Home" method="post" onsubmit="EnableDropdowns()">
+            <h3>Spellcaster Type</h3>
+            <div class="form-group">
+                <select id="SpellcasterType" name="SpellcasterType" asp-items="Html.GetEnumSelectList<SpellcasterType>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <h4>Magic Domain</h4>
+            <div class="form-group">
+                <select id="MagicDomain" name="MagicDomain" asp-items="Html.GetEnumSelectList<MagicDomain>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <h4>Magic Spells</h4>
+            <div class="form-group">
+                <select id="Spell1" name="Spell1" asp-items="Html.GetEnumSelectList<Spell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select id="Spell2" name="Spell2" asp-items="Html.GetEnumSelectList<Spell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <h4>Psionic Domain</h4>
+            <div class="form-group">
+                <select id="PsionicDomain" name="PsionicDomain" asp-items="Html.GetEnumSelectList<PsionicDomain>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <h4>Psionic Spells</h4>
+            <div class="form-group">
+                <select id="PsionicSpell1" name="PsionicSpell1" asp-items="Html.GetEnumSelectList<PsionicSpell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select id="PsionicSpell2" name="PsionicSpell2" asp-items="Html.GetEnumSelectList<PsionicSpell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Distribute Dice" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function PackageChange()
+    {
+        let PackageList = document.getElementById("PackageList");
+        let Competency1 = document.getElementById("Competency1");
+        let Competency2 = document.getElementById("Competency2");
+        
+        //Ensure Comptency 2 List has all available by copying list 1 into list 2
+        removeOptions(Competency2); //clear the list
+        copyDropdown(Competency1, Competency2);
+
+        //Get the package selected
+        var selectedPackage = PackageList.options[PackageList.selectedIndex].text;
+
+        if (selectedPackage != "Custom")
+        {
+            Competency1.disabled = true;
+        }
+        else
+        {
+            Competency1.disabled = false;
+            Competency1.selectedIndex = 1;
+        }
+        
+        switch(selectedPackage) 
+        {
+            case "Athlete":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Craftsman":
+            Competency1.selectedIndex = 7; //Craftsmanship
+            cascadeDropdown(Competency2, [18]); //ManualLabor
+            break;
+            case "Explorer":
+            Competency1.selectedIndex = 13; //Exploring
+            cascadeDropdown(Competency2, [20,32]); //Woodcraft or MountainClimbing
+            break;
+            case "Laborer":
+            Competency1.selectedIndex = 18; //ManualLabor
+            cascadeDropdown(Competency2, [31]); //Unarmed Combat
+            break;
+            case "Soldier":
+            Competency1.selectedIndex = 2; //Armed Combat
+            cascadeDropdown(Competency2, [31]); //Unarmed Combat
+
+            break;
+            case "Alchemist":
+            Competency1.selectedIndex = 1; //Alchemy
+            cascadeDropdown(Competency2, [21]); //Naturalism
+            break;
+            case "Engineer":
+            Competency1.selectedIndex = 9; //Engineering
+            cascadeDropdown(Competency2, [15]); //History
+            break;
+            case "Magician":
+            Competency1.selectedIndex = 17; //Magic
+            cascadeDropdown(Competency2, [1]); //Alchemy
+            break;
+            case "Psychic":
+            Competency1.selectedIndex = 23; //Psionics
+            cascadeDropdown(Competency2, [29]); //TableGames
+            break;
+            case "Scholar":
+            Competency1.selectedIndex = 1; //Alchemy
+            cascadeDropdown(Competency2, [15,21]); //History or Naturalism
+            break;
+
+            case "Eremite":
+            Competency1.selectedIndex = 27; //SocialEngineering
+            cascadeDropdown(Competency2, [24]); //PublicSpeaking
+            break;
+            case "Evangelist":
+            Competency1.selectedIndex = 11; //Evangelism
+            cascadeDropdown(Competency2, [24, 4]); //PublicSpeaking or CommunityOrganization
+            break;
+            case "Merchant":
+            Competency1.selectedIndex = 19; //Mercantilism
+            cascadeDropdown(Competency2, [2,26]); //Armed or SocialDrinking
+            break;
+            case "Minstrel":
+            Competency1.selectedIndex = 10; //Entertainment
+            cascadeDropdown(Competency2, [24]); //PublicSpeaking
+            break;
+            case "Politician":
+            Competency1.selectedIndex = 22; //Politics
+            cascadeDropdown(Competency2, [24, 4]); //PublicSpeaking or CommunityOrganization
+            break;
+
+            case "Assassin":
+            Competency1.selectedIndex = 28; //SuckerPunching
+            cascadeDropdown(Competency2, [14]); //Hiding
+            break;
+            case "ConArtist":
+            Competency1.selectedIndex = 6; //ConfidenceGames
+            cascadeDropdown(Competency2, [8]); //Disguise
+            break;
+            case "Smuggler":
+            Competency1.selectedIndex = 25; //Smuggling
+            cascadeDropdown(Competency2, [12]); //EvasionEscape
+            break;
+            case "Thief":
+            Competency1.selectedIndex = 30; //Thievery
+            cascadeDropdown(Competency2, [14]); //Hiding
+            break;
+            case "Wire":
+            Competency1.selectedIndex = 3; //BypassingTrapsAndAlarms
+            cascadeDropdown(Competency2, [16]); //Lockpicking
+            break;
+        }
+    }
+
+    //Reduce Competency List 2 Dropdown based on the package selected
+    function cascadeDropdown(dropdownElement, filterArray) {
+        var L = dropdownElement.options.length - 1;
+        for (let i = L; i >= 0; i--) {
+           
+            var currentValue = Number(dropdownElement.options[i].value); //had to cast to number, they were coming back as string.
+
+            //if the value is not in the filtered list then remove it
+            if(filterArray.includes(currentValue) === false)
+            {
+                dropdownElement.remove(i);
+            }
+        }
+    }
+
+    //Clear a Dropdown List
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for(i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+
+    //Rebuild Competency Dropdown
+    function copyDropdown(copyFrom, copyTo) {
+        for (let i = 0; i < copyFrom.options.length; i++) {
+            let option = copyFrom.options[i]; //fetch from the master list
+
+            //construct a new option here
+            let newOption = document.createElement("option");
+            newOption.value = option.value
+            newOption.innerHTML = option.innerHTML
+
+            //add the value to the dropdown
+            copyTo.add(newOption);
+        }
+    }
+
+    //Enable Dropdown Helper
+    function EnableDropdowns() {
+        let Competency1 = document.getElementById("Competency1").disabled = false;
+    }
+</script>

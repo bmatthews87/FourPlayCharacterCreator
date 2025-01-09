@@ -6,14 +6,14 @@ namespace FourPlayCharacterCreator
     {
         //Unknown
         [Display(Name = "Arcane Seeing")]
-        ArcaneSeeing,
-        AstralRadiance,
-        Comet,
-        EldritchWaves,
-        MorphicAlteration,
-        Nebula,
-        Starstruck,
-        WordOfDread,
+        ArcaneSeeing = 0,
+        AstralRadiance = 1,
+        Comet = 2,
+        EldritchWaves = 3,
+        MorphicAlteration = 4,
+        Nebula = 5,
+        Starstruck = 6,
+        WordOfDread = 7,
         //Sky
         Applefall,
         CelestialGlory,
