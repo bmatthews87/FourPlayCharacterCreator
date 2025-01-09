@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Text.Json;
 using FourPlayCharacterCreator.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourPlayCharacterCreator.Controllers
 {
@@ -66,11 +65,11 @@ namespace FourPlayCharacterCreator.Controllers
             Character character = GetCharacterSession();
 
             //set character values
-            character.Package = (Package)Enum.Parse(typeof(Package), collection["Package"].ToString());
-            character.Competencies.Add(StringToCompetency(collection["Competency1"].ToString()));
-            character.Competencies.Add(StringToCompetency(collection["Competency2"].ToString()));
-            character.Competencies.Add(StringToCompetency(collection["Competency3"].ToString()));
-            character.Competencies.Add(StringToCompetency(collection["Competency4"].ToString()));
+            character.Package = Common.StringToEnum<Package>(collection["Package"]);
+            character.Competencies.Add(Common.StringToEnum<Competency>(collection["Competency1"]));
+            character.Competencies.Add(Common.StringToEnum<Competency>(collection["Competency2"]));
+            character.Competencies.Add(Common.StringToEnum<Competency>(collection["Competency3"]));
+            character.Competencies.Add(Common.StringToEnum<Competency>(collection["Competency4"]));
 
             //save character
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
@@ -86,10 +85,7 @@ namespace FourPlayCharacterCreator.Controllers
         }
         #endregion
 
-        public Competency StringToCompetency(string someValue)
-        {
-            return (Competency)Enum.Parse(typeof(Competency), someValue);
-        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
