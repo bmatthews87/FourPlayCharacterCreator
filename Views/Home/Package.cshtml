@@ -57,7 +57,12 @@
         let PackageList = document.getElementById("PackageList");
         let Competency1 = document.getElementById("Competency1");
         let Competency2 = document.getElementById("Competency2");
+        
+        //Ensure Comptency 2 List has all available by copying list 1 into list 2
+        removeOptions(Competency2); //clear the list
+        copyDropdown(Competency1, Competency2);
 
+        //Get the package selected
         var selectedPackage = PackageList.options[PackageList.selectedIndex].text;
 
         if (selectedPackage != "Custom")
@@ -68,26 +73,99 @@
         {
             Competency1.disabled = false;
             Competency1.selectedIndex = 1;
-
-            //Since it's custom, ensure Comptency 2 List has all available by copying list 1 into list 2
-            removeOptions(Competency2); //clear the list
-            copyDropdown(Competency1, Competency2);
         }
+        
+        switch(selectedPackage) 
+        {
+            case "Athlete":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Craftsman":
+            Competency1.selectedIndex = 7; //Craftsmanship
+            cascadeDropdown(Competency2, [18]); //ManualLabor
+            break;
+            case "Explorer":
+            Competency1.selectedIndex = 13; //Exploring
+            cascadeDropdown(Competency2, [20,32]); //Woodcraft or MountainClimbing
+            break;
+            case "Laborer":
+            Competency1.selectedIndex = 18; //ManualLabor
+            cascadeDropdown(Competency2, [31]); //Unarmed Combat
+            break;
+            case "Soldier":
+            Competency1.selectedIndex = 2; //Armed Combat
+            cascadeDropdown(Competency2, [31]); //Unarmed Combat
 
-            switch(selectedPackage) {
-      case "Athlete":
-      Competency1.selectedIndex = 5; //Competitive Games
-      cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
-        break;
-      default:
-            }
+            break;
+            case "Alchemist":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Engineer":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Magician":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Psychic":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Scholar":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Eremite":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Evangelist":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Merchant":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Minstrel":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Politician":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Assassin":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "ConArtist":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Smuggler":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Thief":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+            case "Wire":
+            Competency1.selectedIndex = 5; //Competitive Games
+            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
+            break;
+        }
     }
 
     //Reduce Competency List 2 Dropdown based on the package selected
     function cascadeDropdown(dropdownElement, filterArray) {
         var L = dropdownElement.options.length - 1;
         for (let i = L; i >= 0; i--) {
-
+           
             var currentValue = Number(dropdownElement.options[i].value); //had to cast to number, they were coming back as string.
 
             //if the value is not in the filtered list then remove it
@@ -121,7 +199,7 @@
         }
     }
 
-    //Enable Dropwon Helper
+    //Enable Dropdown Helper
     function EnableDropdowns() {
         let Competency1 = document.getElementById("Competency1").disabled = false;
     }
