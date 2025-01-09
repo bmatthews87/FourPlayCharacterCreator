@@ -1,0 +1,198 @@
+﻿@model FourPlayCharacterCreator.Models.Character
+
+@{
+    ViewData["Title"] = "DistributeDice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Distribute Dice</h1>
+<hr />
+
+<h3>Remaining Nuggets</h3>
+<p id="nuggetBox"></p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DistributeDice">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HeadNuggets" class="control-label"></label>
+                <input asp-for="HeadNuggets" class="form-control" oninput="headValueChanged()" />
+                <span asp-validation-for="HeadNuggets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TorsoNuggets" class="control-label"></label>
+                <input asp-for="TorsoNuggets" class="form-control" oninput="torsoValueChanged()" />
+                <span asp-validation-for="TorsoNuggets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LimbNuggets" class="control-label"></label>
+                <input asp-for="LimbNuggets" class="form-control" oninput="limbValueChanged()" />
+                <span asp-validation-for="LimbNuggets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script type="text/javascript">
+    var nuggetsLeft = 6
+    update();
+
+    var currentHead = document.getElementById("HeadNuggets").value;
+    var currentTorso = document.getElementById("TorsoNuggets").value;
+    var currentLimb = document.getElementById("LimbNuggets").value;
+
+    function headValueChanged()
+    {
+
+            //get the new value
+            var newValue = document.getElementById("HeadNuggets").value;
+
+            if(newValue < 2)//if the new value is less than 2, don't update anything and set back to 2
+            {
+                document.getElementById("HeadNuggets").value = 2;
+            }
+            else if(currentHead < newValue)
+            {
+                //before we do anything, check to see if we have points left
+                if(nuggetsLeft <= 0)
+                {
+                    //if we don't have any points left, set the object back to it's original value
+                    document.getElementById("HeadNuggets").value = currentHead;
+                }
+                else
+                {
+                    //we added a nugget so reduce the count
+                     nuggetsLeft--;
+                     currentHead = newValue;
+                     update();
+                }
+            }
+            else
+            {
+                nuggetsLeft++;
+                currentHead = newValue;
+                update();
+            }
+    }
+
+    function torsoValueChanged()
+    {
+
+            //get the new value
+            var newValue = document.getElementById("TorsoNuggets").value;
+
+            if(newValue < 2)//if the new value is less than 2, don't update anything and set back to 2
+            {
+                document.getElementById("TorsoNuggets").value = 2;
+            }
+            else if(currentTorso < newValue)
+            {
+                //before we do anything, check to see if we have points left
+                if(nuggetsLeft <= 0)
+                {
+                    //if we don't have any points left, set the object back to it's original value
+                    document.getElementById("TorsoNuggets").value = currentTorso;
+                }
+                else
+                {
+                    //we added a nugget so reduce the count
+                     nuggetsLeft--;
+                     currentTorso = newValue;
+                     update();
+                }
+            }
+            else
+            {
+                nuggetsLeft++;
+                currentTorso = newValue;
+                update();
+            }
+            }
+
+      function torsoValueChanged()
+      {
+            //get the new value
+            var newValue = document.getElementById("TorsoNuggets").value;
+
+            if(newValue < 2)//if the new value is less than 2, don't update anything and set back to 2
+            {
+                document.getElementById("TorsoNuggets").value = 2;
+            }
+            else if(currentTorso < newValue)
+            {
+                //before we do anything, check to see if we have points left
+                if(nuggetsLeft <= 0)
+                {
+                    //if we don't have any points left, set the object back to it's original value
+                    document.getElementById("TorsoNuggets").value = currentTorso;
+                }
+                else
+                {
+                    //we added a nugget so reduce the count
+                     nuggetsLeft--;
+                     currentTorso = newValue;
+                     update();
+                }
+            }
+            else
+            {
+                nuggetsLeft++;
+                currentTorso = newValue;
+                update();
+            }
+    }
+
+    function limbValueChanged()
+    {
+
+            //get the new value
+            var newValue = document.getElementById("LimbNuggets").value;
+
+            if(newValue < 2)//if the new value is less than 2, don't update anything and set back to 2
+            {
+                document.getElementById("LimbNuggets").value = 2;
+            }
+            else if(currentLimb < newValue)
+            {
+                //before we do anything, check to see if we have points left
+                if(nuggetsLeft <= 0)
+                {
+                    //if we don't have any points left, set the object back to it's original value
+                    document.getElementById("LimbNuggets").value = currentLimb;
+                }
+                else
+                {
+                    //we added a nugget so reduce the count
+                     nuggetsLeft--;
+                     currentLimb = newValue;
+                     update();
+                }
+            }
+            else
+            {
+                nuggetsLeft++;
+                currentLimb = newValue;
+                update();
+            }
+    }
+
+    function update()
+    {
+        var nuggetBox = document.getElementById("nuggetBox").innerHTML = nuggetsLeft;
+    }
+
+</script>

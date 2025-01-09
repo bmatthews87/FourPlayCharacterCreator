@@ -1,4 +1,6 @@
-﻿namespace FourPlayCharacterCreator.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FourPlayCharacterCreator.Models
 {
     public class Character
     {
@@ -7,14 +9,22 @@
             this.Competencies = new List<Competency>();
             this.Spells = new List<Spell>();
             this.PsionicSpells = new List<PsionicSpell>();
+            HeadNuggets = 2;
+            TorsoNuggets = 2;
+            LimbNuggets = 2;
         }
 
         string Name { get; set; }
 
         //1 Nugget = d8
         //Each organ starts with 2 in each and distributes 6
+        [Range(2, 20, ErrorMessage = "Must be at least 2 Nuggets")]
         public int HeadNuggets { get; set; }
+
+        [Range(2, 20, ErrorMessage = "Must be at least 2 Nuggets")]
         public int TorsoNuggets { get; set; }
+
+        [Range(2, 20, ErrorMessage = "Must be at least 2 Nuggets")]
         public int LimbNuggets { get; set; }
 
         //Optional Package (Used to get groups of competencies

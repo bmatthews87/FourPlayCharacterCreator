@@ -76,7 +76,7 @@ namespace FourPlayCharacterCreator.Controllers
 
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(DistributeDice));
             }
             catch
             {
@@ -85,7 +85,38 @@ namespace FourPlayCharacterCreator.Controllers
         }
         #endregion
 
+        #region Step 3) Distribute Dice
+        public IActionResult DistributeDice()
+        {
+            Character character = GetCharacterSession();
+            return View(character);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DistributeDice(IFormCollection collection)
+        {
+            //get current character session
+            Character character = GetCharacterSession();
+
+            //set character values
+            character.HeadNuggets = int.Parse(collection["HeadNuggets"]);
+            character.LimbNuggets = int.Parse(collection["LimbNuggets"]);
+            character.HeadNuggets = int.Parse(collection["HeadNuggets"]);
+
+            //save character
+            HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
+
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        #endregion
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
