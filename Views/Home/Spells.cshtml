@@ -12,7 +12,7 @@
     <option selected="selected" value=""></option>
 </select>
 
-<h4>Step 2) Choose a Package</h4>
+<h4>Step 2) Choose Spells</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,15 +24,14 @@
                 </select>
             </div>
             <br />
-            <br />
-            <h4>Magic Domain</h4>
+            <h4 id="MagicHeader"></h4>
             <div class="form-group">
                 <select id="MagicDomain" name="MagicDomain" asp-items="Html.GetEnumSelectList<MagicDomain>()" onchange="MagicDomainChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
-            <h4>Magic Spells</h4>
+            <h4 id="MagicSpellsHeader">Magic Spells</h4>
             <div class="form-group">
                 <select id="Spell1" name="Spell1" asp-items="Html.GetEnumSelectList<Spell>()">
                     <option selected="selected" value=""></option>
@@ -46,14 +45,14 @@
             </div>
             <br />
             <br />
-            <h4>Psionic Domain</h4>
+            <h4 id="PsionicHeader"></h4>
             <div class="form-group">
                 <select id="PsionicDomain" name="PsionicDomain" asp-items="Html.GetEnumSelectList<PsionicDomain>()" onchange="PsionicDomainChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
-            <h4>Psionic Spells</h4>
+            <h4 id="PsionicSpellsHeader">Psionic Spells</h4>
             <div class="form-group">
                 <select id="PsionicSpell1" name="PsionicSpell1" asp-items="Html.GetEnumSelectList<PsionicSpell>()">
                     <option selected="selected" value=""></option>
@@ -74,11 +73,16 @@
 </div>
 
 <script type="text/javascript">
-
     let spellcasterTypeDropdown = document.getElementById("SpellcasterType");
+
+    let MagicHeader = document.getElementById("MagicHeader");
+    let MagicSpellsHeader = document.getElementById("MagicSpellsHeader");
     let magicDomainDropdown = document.getElementById("MagicDomain");
     let Spell1Dropdown = document.getElementById("Spell1");
     let Spell2Dropdown = document.getElementById("Spell2");
+
+    let PsionicHeader = document.getElementById("PsionicHeader");
+    let PsionicSpellsHeader = document.getElementById("PsionicSpellsHeader");
     let PsionicDomainDropdown = document.getElementById("PsionicDomain");
     let PsionicSpell1Dropdown = document.getElementById("PsionicSpell1");
     let PsionicSpell2Dropdown = document.getElementById("PsionicSpell2");
@@ -87,6 +91,10 @@
 
     function hideAll()
     {
+        MagicHeader.innerHTML = "";
+        PsionicHeader.innerHTML = "";
+        PsionicSpellsHeader.innerHTML = "";
+        MagicSpellsHeader.innerHTML = "";
         magicDomainDropdown.hidden = true;
         Spell1Dropdown.hidden = true;
         Spell2Dropdown.hidden = true;
@@ -104,11 +112,15 @@
         else if (spellcasterTypeDropdown.value == 1) //magic
         {
             hideAll();
+            MagicHeader.innerHTML = "Magic Domain";
+            MagicSpellsHeader.innerHTML = "Magic Spells";
             magicDomainDropdown.hidden = false;
         }
         else if (spellcasterTypeDropdown.value == 2) //psionic
         {
             hideAll();
+            PsionicHeader.innerHTML = "Psionic Domain";
+            PsionicSpellsHeader.innerHTML = "Psionic Spells";
             PsionicDomainDropdown.hidden = false;
         }
     }
@@ -135,8 +147,60 @@
         switch(selectedDomain)
         {
             case "Unknown":
-            cascadeDropdown(Spell1, [0,1,2,3,4,5,6,7]); //Armed or Unarmed Combat
-            cascadeDropdown(Spell2, [0,1,2,3,4,5,6,7]); //Armed or Unarmed Combat
+            cascadeDropdown(Spell1, [0,1,2,3,4,5,6,7]);
+            cascadeDropdown(Spell2, [0,1,2,3,4,5,6,7]);
+            break;
+            case "Sky":
+            cascadeDropdown(Spell1, [8,9,10,11,12,13,14,15]);
+            cascadeDropdown(Spell2, [8,9,10,11,12,13,14,15]);
+            break;
+            case "Surface":
+            cascadeDropdown(Spell1, [16,17,18,19,20,21,22,23]);
+            cascadeDropdown(Spell2, [16,17,18,19,20,21,22,23]);
+            break;
+            case "Underworld":
+            cascadeDropdown(Spell1, [24,25,26,27,28,29,30,31]);
+            cascadeDropdown(Spell2, [24,25,26,27,28,29,30,31]);
+            break;
+        }
+    }
+
+    function PsionicDomainChange()
+    {
+        let PsionicDomain = document.getElementById("PsionicDomain");
+        let MasterPsionicSpellList = document.getElementById("MasterPsionicSpellList");
+        let PsionicSpell1 = document.getElementById("PsionicSpell1");
+        let PsionicSpell2 = document.getElementById("PsionicSpell2");
+
+        PsionicSpell1.hidden = false;
+        PsionicSpell2.hidden = false;
+
+        //Ensure Spells are refreshed from the Master Spell List
+        removeOptions(PsionicSpell1);
+        removeOptions(PsionicSpell2);
+        copyDropdown(MasterPsionicSpellList, PsionicSpell1);
+        copyDropdown(MasterPsionicSpellList, PsionicSpell2);
+
+        //Get the package selected
+        var selectedDomain = PsionicDomain.options[PsionicDomain.selectedIndex].text;
+
+        switch(selectedDomain)
+        {
+            case "Telepathy":
+            cascadeDropdown(PsionicSpell1, [0,1,2,3,4,5,6,7]);
+            cascadeDropdown(PsionicSpell2, [0,1,2,3,4,5,6,7]);
+            break;
+            case "Faith Healing":
+            cascadeDropdown(PsionicSpell1, [8,9,10,11,12,13,14,15]);
+            cascadeDropdown(PsionicSpell2, [8,9,10,11,12,13,14,15]);
+            break;
+            case "Temporalism":
+            cascadeDropdown(PsionicSpell1, [16,17,18,19,20,21,22,23]);
+            cascadeDropdown(PsionicSpell2, [16,17,18,19,20,21,22,23]);
+            break;
+            case "Psychokinesis":
+            cascadeDropdown(PsionicSpell1, [24,25,26,27,28,29,30,31]);
+            cascadeDropdown(PsionicSpell2, [24,25,26,27,28,29,30,31]);
             break;
         }
     }
