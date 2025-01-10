@@ -5,14 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<select id="MasterSpellList" asp-items="Html.GetEnumSelectList<Spell>()" hidden disabled>
+    <option selected="selected" value=""></option>
+</select>
+<select id="MasterPsionicSpellList" asp-items="Html.GetEnumSelectList<PsionicSpell>()" hidden disabled>
+    <option selected="selected" value=""></option>
+</select>
+
 <h4>Step 2) Choose a Package</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Spells" asp-controller="Home" method="post" onsubmit="EnableDropdowns()">
+        <form asp-action="Spells" asp-controller="Home" method="post">
             <h3>Spellcaster Type</h3>
             <div class="form-group">
-                <select id="SpellcasterType" name="SpellcasterType" asp-items="Html.GetEnumSelectList<SpellcasterType>()">
+                <select id="SpellcasterType" name="SpellcasterType" asp-items="Html.GetEnumSelectList<SpellcasterType>()" onchange="SpellcasterTypeChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
@@ -20,7 +27,7 @@
             <br />
             <h4>Magic Domain</h4>
             <div class="form-group">
-                <select id="MagicDomain" name="MagicDomain" asp-items="Html.GetEnumSelectList<MagicDomain>()">
+                <select id="MagicDomain" name="MagicDomain" asp-items="Html.GetEnumSelectList<MagicDomain>()" onchange="MagicDomainChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
@@ -41,7 +48,7 @@
             <br />
             <h4>Psionic Domain</h4>
             <div class="form-group">
-                <select id="PsionicDomain" name="PsionicDomain" asp-items="Html.GetEnumSelectList<PsionicDomain>()">
+                <select id="PsionicDomain" name="PsionicDomain" asp-items="Html.GetEnumSelectList<PsionicDomain>()" onchange="PsionicDomainChange()">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
@@ -67,122 +74,78 @@
 </div>
 
 <script type="text/javascript">
-    function PackageChange()
+
+    let spellcasterTypeDropdown = document.getElementById("SpellcasterType");
+    let magicDomainDropdown = document.getElementById("MagicDomain");
+    let Spell1Dropdown = document.getElementById("Spell1");
+    let Spell2Dropdown = document.getElementById("Spell2");
+    let PsionicDomainDropdown = document.getElementById("PsionicDomain");
+    let PsionicSpell1Dropdown = document.getElementById("PsionicSpell1");
+    let PsionicSpell2Dropdown = document.getElementById("PsionicSpell2");
+
+    hideAll();
+
+    function hideAll()
     {
-        let PackageList = document.getElementById("PackageList");
-        let Competency1 = document.getElementById("Competency1");
-        let Competency2 = document.getElementById("Competency2");
-        
-        //Ensure Comptency 2 List has all available by copying list 1 into list 2
-        removeOptions(Competency2); //clear the list
-        copyDropdown(Competency1, Competency2);
+        magicDomainDropdown.hidden = true;
+        Spell1Dropdown.hidden = true;
+        Spell2Dropdown.hidden = true;
+        PsionicDomainDropdown.hidden = true;
+        PsionicSpell1Dropdown.hidden = true;
+        PsionicSpell2Dropdown.hidden = true;
+    }
+
+    function SpellcasterTypeChange()
+    {
+        if(spellcasterTypeDropdown.value == 0) //none
+        {
+            hideAll();
+        }
+        else if (spellcasterTypeDropdown.value == 1) //magic
+        {
+            hideAll();
+            magicDomainDropdown.hidden = false;
+        }
+        else if (spellcasterTypeDropdown.value == 2) //psionic
+        {
+            hideAll();
+            PsionicDomainDropdown.hidden = false;
+        }
+    }
+
+    function MagicDomainChange()
+    {
+        let MagicDomain = document.getElementById("MagicDomain");
+        let MasterSpellList = document.getElementById("MasterSpellList");
+        let Spell1 = document.getElementById("Spell1");
+        let Spell2 = document.getElementById("Spell2");
+
+        Spell1.hidden = false;
+        Spell2.hidden = false;
+
+        //Ensure Spells are refreshed from the Master Spell List
+        removeOptions(Spell1);
+        removeOptions(Spell2);
+        copyDropdown(MasterSpellList, Spell1);
+        copyDropdown(MasterSpellList, Spell2);
 
         //Get the package selected
-        var selectedPackage = PackageList.options[PackageList.selectedIndex].text;
+        var selectedDomain = MagicDomain.options[MagicDomain.selectedIndex].text;
 
-        if (selectedPackage != "Custom")
+        switch(selectedDomain)
         {
-            Competency1.disabled = true;
-        }
-        else
-        {
-            Competency1.disabled = false;
-            Competency1.selectedIndex = 1;
-        }
-        
-        switch(selectedPackage) 
-        {
-            case "Athlete":
-            Competency1.selectedIndex = 5; //Competitive Games
-            cascadeDropdown(Competency2, [2,30]); //Armed or Unarmed Combat
-            break;
-            case "Craftsman":
-            Competency1.selectedIndex = 7; //Craftsmanship
-            cascadeDropdown(Competency2, [18]); //ManualLabor
-            break;
-            case "Explorer":
-            Competency1.selectedIndex = 13; //Exploring
-            cascadeDropdown(Competency2, [20,32]); //Woodcraft or MountainClimbing
-            break;
-            case "Laborer":
-            Competency1.selectedIndex = 18; //ManualLabor
-            cascadeDropdown(Competency2, [31]); //Unarmed Combat
-            break;
-            case "Soldier":
-            Competency1.selectedIndex = 2; //Armed Combat
-            cascadeDropdown(Competency2, [31]); //Unarmed Combat
-
-            break;
-            case "Alchemist":
-            Competency1.selectedIndex = 1; //Alchemy
-            cascadeDropdown(Competency2, [21]); //Naturalism
-            break;
-            case "Engineer":
-            Competency1.selectedIndex = 9; //Engineering
-            cascadeDropdown(Competency2, [15]); //History
-            break;
-            case "Magician":
-            Competency1.selectedIndex = 17; //Magic
-            cascadeDropdown(Competency2, [1]); //Alchemy
-            break;
-            case "Psychic":
-            Competency1.selectedIndex = 23; //Psionics
-            cascadeDropdown(Competency2, [29]); //TableGames
-            break;
-            case "Scholar":
-            Competency1.selectedIndex = 1; //Alchemy
-            cascadeDropdown(Competency2, [15,21]); //History or Naturalism
-            break;
-
-            case "Eremite":
-            Competency1.selectedIndex = 27; //SocialEngineering
-            cascadeDropdown(Competency2, [24]); //PublicSpeaking
-            break;
-            case "Evangelist":
-            Competency1.selectedIndex = 11; //Evangelism
-            cascadeDropdown(Competency2, [24, 4]); //PublicSpeaking or CommunityOrganization
-            break;
-            case "Merchant":
-            Competency1.selectedIndex = 19; //Mercantilism
-            cascadeDropdown(Competency2, [2,26]); //Armed or SocialDrinking
-            break;
-            case "Minstrel":
-            Competency1.selectedIndex = 10; //Entertainment
-            cascadeDropdown(Competency2, [24]); //PublicSpeaking
-            break;
-            case "Politician":
-            Competency1.selectedIndex = 22; //Politics
-            cascadeDropdown(Competency2, [24, 4]); //PublicSpeaking or CommunityOrganization
-            break;
-
-            case "Assassin":
-            Competency1.selectedIndex = 28; //SuckerPunching
-            cascadeDropdown(Competency2, [14]); //Hiding
-            break;
-            case "ConArtist":
-            Competency1.selectedIndex = 6; //ConfidenceGames
-            cascadeDropdown(Competency2, [8]); //Disguise
-            break;
-            case "Smuggler":
-            Competency1.selectedIndex = 25; //Smuggling
-            cascadeDropdown(Competency2, [12]); //EvasionEscape
-            break;
-            case "Thief":
-            Competency1.selectedIndex = 30; //Thievery
-            cascadeDropdown(Competency2, [14]); //Hiding
-            break;
-            case "Wire":
-            Competency1.selectedIndex = 3; //BypassingTrapsAndAlarms
-            cascadeDropdown(Competency2, [16]); //Lockpicking
+            case "Unknown":
+            cascadeDropdown(Spell1, [0,1,2,3,4,5,6,7]); //Armed or Unarmed Combat
+            cascadeDropdown(Spell2, [0,1,2,3,4,5,6,7]); //Armed or Unarmed Combat
             break;
         }
     }
 
-    //Reduce Competency List 2 Dropdown based on the package selected
+    //Reduce Spell Dropdown Based on Domain
     function cascadeDropdown(dropdownElement, filterArray) {
         var L = dropdownElement.options.length - 1;
         for (let i = L; i >= 0; i--) {
-           
+
             var currentValue = Number(dropdownElement.options[i].value); //had to cast to number, they were coming back as string.
 
             //if the value is not in the filtered list then remove it
@@ -214,10 +177,5 @@
             //add the value to the dropdown
             copyTo.add(newOption);
         }
-    }
-
-    //Enable Dropdown Helper
-    function EnableDropdowns() {
-        let Competency1 = document.getElementById("Competency1").disabled = false;
     }
 </script>
