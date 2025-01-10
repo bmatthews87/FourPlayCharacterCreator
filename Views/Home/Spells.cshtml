@@ -44,6 +44,18 @@
                 </select>
             </div>
             <br />
+            <div class="form-group">
+                <select id="Spell3" name="Spell3" asp-items="Html.GetEnumSelectList<Spell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select id="Spell4" name="Spell4" asp-items="Html.GetEnumSelectList<Spell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
             <br />
             <h4 id="PsionicHeader"></h4>
             <div class="form-group">
@@ -66,7 +78,19 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Distribute Dice" class="btn btn-primary" />
+                <select id="PsionicSpell3" name="PsionicSpell3" asp-items="Html.GetEnumSelectList<PsionicSpell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select id="PsionicSpell4" name="PsionicSpell4" asp-items="Html.GetEnumSelectList<PsionicSpell>()">
+                    <option selected="selected" value=""></option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Finish" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -80,12 +104,16 @@
     let magicDomainDropdown = document.getElementById("MagicDomain");
     let Spell1Dropdown = document.getElementById("Spell1");
     let Spell2Dropdown = document.getElementById("Spell2");
+    let Spell3Dropdown = document.getElementById("Spell3");
+    let Spell4Dropdown = document.getElementById("Spell4");
 
     let PsionicHeader = document.getElementById("PsionicHeader");
     let PsionicSpellsHeader = document.getElementById("PsionicSpellsHeader");
     let PsionicDomainDropdown = document.getElementById("PsionicDomain");
     let PsionicSpell1Dropdown = document.getElementById("PsionicSpell1");
     let PsionicSpell2Dropdown = document.getElementById("PsionicSpell2");
+    let PsionicSpell3Dropdown = document.getElementById("PsionicSpell3");
+    let PsionicSpell4Dropdown = document.getElementById("PsionicSpell4");
 
     hideAll();
 
@@ -98,9 +126,13 @@
         magicDomainDropdown.hidden = true;
         Spell1Dropdown.hidden = true;
         Spell2Dropdown.hidden = true;
+        Spell3Dropdown.hidden = true;
+        Spell4Dropdown.hidden = true;
         PsionicDomainDropdown.hidden = true;
         PsionicSpell1Dropdown.hidden = true;
         PsionicSpell2Dropdown.hidden = true;
+        PsionicSpell3Dropdown.hidden = true;
+        PsionicSpell4Dropdown.hidden = true;
     }
 
     function SpellcasterTypeChange()
@@ -131,11 +163,15 @@
         let MasterSpellList = document.getElementById("MasterSpellList");
         let Spell1 = document.getElementById("Spell1");
         let Spell2 = document.getElementById("Spell2");
+                let Spell3 = document.getElementById("Spell3");
+        let Spell4 = document.getElementById("Spell4");
 
         Spell1.hidden = false;
         Spell2.hidden = false;
+        Spell3.hidden = false;
+        Spell4.hidden = false;
 
-        //Ensure Spells are refreshed from the Master Spell List
+        //Ensure Spells are refreshed from the Master Spell List (only for 1 & 2 as 3 and 4 can be any)
         removeOptions(Spell1);
         removeOptions(Spell2);
         copyDropdown(MasterSpellList, Spell1);
@@ -171,9 +207,13 @@
         let MasterPsionicSpellList = document.getElementById("MasterPsionicSpellList");
         let PsionicSpell1 = document.getElementById("PsionicSpell1");
         let PsionicSpell2 = document.getElementById("PsionicSpell2");
+        let PsionicSpell3 = document.getElementById("PsionicSpell3");
+        let PsionicSpell4 = document.getElementById("PsionicSpell4");
 
         PsionicSpell1.hidden = false;
         PsionicSpell2.hidden = false;
+        PsionicSpell3.hidden = false;
+        PsionicSpell4.hidden = false;
 
         //Ensure Spells are refreshed from the Master Spell List
         removeOptions(PsionicSpell1);

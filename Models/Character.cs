@@ -31,16 +31,18 @@ namespace FourPlayCharacterCreator.Models
         public int LimbNuggets { get; set; }
 
         //Optional Package (Used to get groups of competencies
+        [Required]
         public Package Package { get; set; }
 
         //Proclivities have competencies underneath them
         //Typically 2d8 Bonus. Mental = Head, Physical and Anti-Social use Limbs, Torso = None
+        [Required]
         public Proclivity Proclivity { get; set; }
 
         //Typically d6 bonus
+        [Required]
         public SpellcasterType SpellcasterType { get; set; }
         public List<Competency> Competencies { get; set; }
-
         public MagicDomain MagicDomain { get; set; }
         public List<Spell> Spells { get; set; }
         public PsionicDomain PsionicDomain { get; set; }

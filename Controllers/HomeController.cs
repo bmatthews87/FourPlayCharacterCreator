@@ -134,29 +134,33 @@ namespace FourPlayCharacterCreator.Controllers
             Character character = GetCharacterSession();
 
             //get the spellcaster type selected 
-            SpellcasterType spellcasterType = Common.StringToEnum<SpellcasterType>(collection["SpellcasterType"]);
+            character.SpellcasterType = Common.StringToEnum<SpellcasterType>(collection["SpellcasterType"]);
 
             //set character values based on spell type
-            if (spellcasterType == SpellcasterType.Magic)
+            if (character.SpellcasterType == SpellcasterType.Magic)
             {
                 character.MagicDomain = Common.StringToEnum<MagicDomain>(collection["MagicDomain"]);
                 character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell1"]));
                 character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell2"]));
+                character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell3"]));
+                character.Spells.Add(Common.StringToEnum<Spell>(collection["Spell4"]));
 
                 HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
             }
-            else if (spellcasterType == SpellcasterType.Psionics)
+            else if (character.SpellcasterType == SpellcasterType.Psionics)
             {
                 character.PsionicDomain = Common.StringToEnum<PsionicDomain>(collection["PsionicDomain"]);
                 character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell1"]));
                 character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell2"]));
+                character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell3"]));
+                character.PsionicSpells.Add(Common.StringToEnum<PsionicSpell>(collection["PsionicSpell4"]));
 
                 HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
             }
 
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Result));
             }
             catch
             {
@@ -164,6 +168,12 @@ namespace FourPlayCharacterCreator.Controllers
             }
         }
         #endregion
+
+        public IActionResult Result()
+        {
+            Character character = GetCharacterSession();
+            return View(character);
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

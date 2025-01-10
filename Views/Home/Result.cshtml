@@ -1,0 +1,71 @@
+﻿@model FourPlayCharacterCreator.Models.Character
+
+@{
+    ViewData["Title"] = "Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Result</h1>
+
+<div>
+    <h4>Character</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proclivity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proclivity)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Package)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Package)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HeadNuggets)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HeadNuggets)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TorsoNuggets)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TorsoNuggets)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LimbNuggets)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LimbNuggets)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SpellcasterType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SpellcasterType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MagicDomain)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MagicDomain)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PsionicDomain)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PsionicDomain)
+        </dd>
+    </dl>
+</div>

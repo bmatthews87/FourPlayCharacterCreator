@@ -8,7 +8,7 @@
 <h1>Distribute Dice</h1>
 <hr />
 
-<form asp-action="DistributeDice">
+<form asp-action="DistributeDice" onsubmit="return isValidCheck()">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="row g-3">
@@ -156,5 +156,17 @@
                 LimbNuggets.value--;
             }
         }
+    }
+
+        function isValidCheck() {
+
+        if (RemainingNuggets.value != 0)
+        {
+            alert("Finish Allocating Nuggets")
+
+            return false;
+        }
+
+        return true;
     }
 </script>

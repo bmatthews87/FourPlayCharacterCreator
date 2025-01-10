@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Package" asp-controller="Home" method="post" onsubmit="EnableDropdowns()">
+        <form asp-action="Package" asp-controller="Home" method="post" onsubmit="return isValidCheck()">
             <div class="form-group">
                 <select id="PackageList" asp-for=Package name="Package" asp-items="Html.GetEnumSelectList<Package>()" onchange="PackageChange()">
                     <option selected="selected" value=""></option>
@@ -34,13 +34,13 @@
             <h3>Other Competencies</h3>
             <div class="form-group">
                 <select id="Competency3" name="Competency3" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected"></option>
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
             <div class="form-group">
                 <select id="Competency4" name="Competency4" asp-items="Html.GetEnumSelectList<Competency>()">
-                    <option selected="selected"></option>
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
             <br />
@@ -52,12 +52,13 @@
 </div>
 
 <script type="text/javascript">
+           
+    let PackageList = document.getElementById("PackageList");
+    let Competency1 = document.getElementById("Competency1");
+    let Competency2 = document.getElementById("Competency2");
+
     function PackageChange()
     {
-        let PackageList = document.getElementById("PackageList");
-        let Competency1 = document.getElementById("Competency1");
-        let Competency2 = document.getElementById("Competency2");
-        
         //Ensure Comptency 2 List has all available by copying list 1 into list 2
         removeOptions(Competency2); //clear the list
         copyDropdown(Competency1, Competency2);
@@ -201,8 +202,21 @@
         }
     }
 
-    //Enable Dropdown Helper
-    function EnableDropdowns() {
-        let Competency1 = document.getElementById("Competency1").disabled = false;
+    function isValidCheck() {
+        Competency1.disabled = false; //need to enable the dropdown to get the value
+
+        if (PackageList.value == "" || Competency1.value == 0 || Competency2.value == 0 || Competency3.value == 0 || Competency4.value == 0)
+        {
+            alert("Please finish selecting your package and competencies")
+
+            //only disable the first comptency if it's not custom (0 = Custom)
+            if(PackageList.value != 0) 
+            {
+                Competency1.disabled = true;
+            }
+            return false;
+        }
+        
+        return true;
     }
 </script>
