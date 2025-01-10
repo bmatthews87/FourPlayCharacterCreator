@@ -100,6 +100,7 @@ namespace FourPlayCharacterCreator.Controllers
             Character character = GetCharacterSession();
 
             //set character values
+            character.RemainingNuggets = int.Parse(collection["RemainingNuggets"]);
             character.HeadNuggets = int.Parse(collection["HeadNuggets"]);
             character.LimbNuggets = int.Parse(collection["LimbNuggets"]);
             character.HeadNuggets = int.Parse(collection["HeadNuggets"]);

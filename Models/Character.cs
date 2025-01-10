@@ -9,12 +9,15 @@ namespace FourPlayCharacterCreator.Models
             this.Competencies = new List<Competency>();
             this.Spells = new List<Spell>();
             this.PsionicSpells = new List<PsionicSpell>();
+            RemainingNuggets = 6;
             HeadNuggets = 2;
             TorsoNuggets = 2;
             LimbNuggets = 2;
         }
 
         string Name { get; set; }
+
+        public int RemainingNuggets { get; set; }
 
         //1 Nugget = d8
         //Each organ starts with 2 in each and distributes 6
