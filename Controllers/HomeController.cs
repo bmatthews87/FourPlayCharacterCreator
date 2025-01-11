@@ -102,8 +102,8 @@ namespace FourPlayCharacterCreator.Controllers
             //set character values
             character.RemainingNuggets = int.Parse(collection["RemainingNuggets"]);
             character.HeadNuggets = int.Parse(collection["HeadNuggets"]);
+            character.TorsoNuggets = int.Parse(collection["TorsoNuggets"]);
             character.LimbNuggets = int.Parse(collection["LimbNuggets"]);
-            character.HeadNuggets = int.Parse(collection["HeadNuggets"]);
 
             //save character
             HttpContext.Session.SetString("Character", JsonSerializer.Serialize(character));
