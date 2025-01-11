@@ -28,11 +28,11 @@
         </dd>
     </dl>
     <h4>Competencies</h4>
-    <dl class="row">       
+    <dl class="row">
         @foreach (Competency c in Model.Competencies)
         {
             <dd class="col-sm-10">
-               <b>@c</b>
+                <b>@c</b>
             </dd>
         }
     </dl>
@@ -78,22 +78,28 @@
             @Html.DisplayFor(model => model.PsionicDomain)
         </dd>
     </dl>
-    <h4>Spells</h4>
-    <dl class="row">
-        @foreach (Spell s in Model.Spells)
-        {
-            <dd class="col-sm-10">
-                <b>@s</b>
-            </dd>
-        }
-    </dl>
-    <h4>Psionic Spells</h4>
-    <dl class="row">
-        @foreach (PsionicSpell ps in Model.PsionicSpells)
-        {
-            <dd class="col-sm-10">
-                <b>@ps</b>
-            </dd>
-        }
-    </dl>
+    @if (Model.SpellcasterType == SpellcasterType.Magic)
+    {
+        <h4>Spells</h4>
+        <dl class="row">
+            @foreach (Spell s in Model.Spells)
+            {
+                <dd class="col-sm-10">
+                    <b>@s</b>
+                </dd>
+            }
+        </dl>
+    }
+    @if (Model.SpellcasterType == SpellcasterType.Psionics)
+    {
+        <h4>Psionic Spells</h4>
+        <dl class="row">
+            @foreach (PsionicSpell ps in Model.PsionicSpells)
+            {
+                <dd class="col-sm-10">
+                    <b>@ps</b>
+                </dd>
+            }
+        </dl>
+    }
 </div>
