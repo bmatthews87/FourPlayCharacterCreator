@@ -80,19 +80,19 @@
     </dl>
     <h4>Spells</h4>
     <dl class="row">
-        @foreach (Competency c in Model.Spells)
+        @foreach (Spell s in Model.Spells)
         {
             <dd class="col-sm-10">
-                <b>@c</b>
+                <b>@s</b>
             </dd>
         }
     </dl>
     <h4>Psionic Spells</h4>
     <dl class="row">
-        @foreach (Competency c in Model.PsionicSpells)
+        @foreach (PsionicSpell ps in Model.PsionicSpells)
         {
             <dd class="col-sm-10">
-                <b>@c</b>
+                <b>@ps</b>
             </dd>
         }
     </dl>
